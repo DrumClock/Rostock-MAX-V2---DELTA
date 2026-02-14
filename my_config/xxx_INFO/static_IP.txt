@@ -1,0 +1,35 @@
+ 
+== 'výpis nastaveni' ==
+ nmcli 
+ nmcli device show     ' to get complete information about known devices '
+ nmcli connection show   ' to get an overview on active connection profiles '
+
+
+== 'výpis wifi sítí'  
+  nmcli dev wifi list
+  
+
+== pro "wlan0" == 
+
+sudo nmcli con mod "MFG" ipv4.addresses "192.168.0.34/24"
+sudo nmcli con mod "MFG" ipv4.gateway "192.168.0.1"
+sudo nmcli con mod "MFG" ipv4.dns "192.168.0.1"
+sudo nmcli con mod "MFG" ipv4.method manual
+sudo nmcli con down "MFG" && sudo nmcli con up "MFG"
+  
+
+
+----------------------------------------
+
+
+== 'pokud to nepůjde' 
+
+sudo nano /etc/dhcpcd.conf
+
+interface wlan0
+static ip_address=192.168.0.34/24
+static routers=192.168.0.1
+static domain_name_servers=192.168.0.1
+
+
+sudo systemctl restart dhcpcd
