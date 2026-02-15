@@ -33,3 +33,36 @@ static domain_name_servers=192.168.0.1
 
 
 sudo systemctl restart dhcpcd
+
+
+---------------------------------------------------
+přidání další Wifi
+
+1. Přímo v system.cfg (pokud to skript podporuje)
+
+## wifi name
+WIFI_SSID="MFG"
+## wifi password
+WIFI_PASSWD="72212209"
+
+## second wifi
+WIFI_SSID2="Domaci_WiFi"
+WIFI_PASSWD2="heslo123"
+
+Ale: Musíš zkontrolovat, jestli instalační skript CB1 tohle podporuje. Není to standardní.
+
+
+2. Pomocí NetworkManager (doporučuji)
+Spolehlivější je přidat druhou WiFi ručně přes nmcli:
+
+# Přidej druhou WiFi síť
+
+sudo nmcli dev wifi connect "Nazev_Druhe_Wifi" password "heslo_druhe_wifi"
+
+
+# Nastav priority (vyšší číslo = vyšší priorita)
+
+sudo nmcli con mod "MFG" connection.autoconnect-priority 10
+sudo nmcli con mod "Nazev_Druhe_Wifi" connection.autoconnect-priority 5
+
+
